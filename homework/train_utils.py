@@ -50,7 +50,7 @@ def train_classification(
     model.train()
 
     # load the train and validation sets
-    train_data = load_data('classification_data/train', shuffle=True, batch_size=batch_size)
+    train_data = load_data('classification_data/train', shuffle=True, batch_size=batch_size, transform_pipeline='aug')
     val_data = load_data('classification_data/val', batch_size=batch_size)
 
     # start the optimizer
