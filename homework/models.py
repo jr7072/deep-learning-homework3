@@ -8,7 +8,68 @@ INPUT_MEAN = [0.2788, 0.2657, 0.2629]
 INPUT_STD = [0.2064, 0.1944, 0.2252]
 
 
+class InvertedResBlock(nn.Module):
+
+    def __init__(
+        self,
+        in_channels: int,
+        out_channels: int,
+        exp_factor: int,
+        stride: int,
+    ) -> None:
+        """
+            Inverted residual block for mobile net v2
+
+            Args:
+                in_channels: int, number of input channels
+                out_channels: int, number of output channels
+                exp_factor: int, factor by which to expand the linear bottleneck
+                stride: int, stride length for expansion layer
+        """
+        super().__init__()
+
+        exp_channel_size = in_channels * exp_factor
+
+        layers = [
+            torch.nn.Conv2d(
+                in_channels,
+                out_channels=exp_channel_size,
+                kernel_size=1
+            ),
+            torch.nn.BatchNorm2d(exp_channel_size),
+            torch.nn.ReLU6(),
+            torch.nn.Conv2d(
+                exp_channel_size,
+                out_channels=exp_channel_size,
+                kernel_size=3,
+                padding=1,
+                stride=stride,
+                groups=exp_channel_size # depthwise convolution
+            ),
+            torch.nn.BatchNorm2d(exp_channel_size),
+            torch.nn.ReLU6(),
+            torch.nn.Conv2d( # linear bottleneck
+                exp_channel_size,
+                out_channels=out_channels,
+                kernel_size=1
+            )
+        ]
+
+        # define the residual connection
+        if in_channels == out_channels:
+            self.residual = torch.nn.Identity()
+        
+        else:
+            self.residual = torch.nn.Conv2d(in_channels, out_channels, kernel_size=1)
+
+        self.block = torch.nn.Sequential(*layers)
+    
+    def forward(self, x: torch.tensor) -> torch.tensor:
+
+        return self.block(x) + self.residual(x)
+
 class Classifier(nn.Module):
+
     def __init__(
         self,
         in_channels: int = 3,
