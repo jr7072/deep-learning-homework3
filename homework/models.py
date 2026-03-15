@@ -164,6 +164,7 @@ class Classifier(nn.Module):
         layers.append(torch.nn.ReLU6())
         layers.append(torch.nn.AdaptiveAvgPool2d(1))
         layers.append(torch.nn.ReLU6())
+        layers.append(torch.nn.Dropout(p=.2))
         layers.append(torch.nn.Conv2d(1280, num_classes, kernel_size=1))
         
         self.model = torch.nn.Sequential(*layers)
