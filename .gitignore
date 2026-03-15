@@ -3,3 +3,7 @@ bundle.py
 classification_data/
 drive_data/
 homework/__pycache__
+homework/datasets/__pycache__
+classification_data.zip
+drive_data.zip
+test.ipynb
