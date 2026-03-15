@@ -54,7 +54,7 @@ def train_classification(
     val_data = load_data('classification_data/val', batch_size=batch_size)
 
     # start the optimizer
-    optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9)
+    optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=4e-5)
 
     # start metric obj
     train_accuracy_obj = AccuracyMetric()
