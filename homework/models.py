@@ -86,6 +86,7 @@ class Classifier(nn.Module):
         """
         super().__init__()
 
+        self.num_classes = num_classes
         self.register_buffer("input_mean", torch.as_tensor(INPUT_MEAN))
         self.register_buffer("input_std", torch.as_tensor(INPUT_STD))
 
@@ -180,7 +181,7 @@ class Classifier(nn.Module):
 
 
         # TODO: replace with actual forward pass
-        logits = self.model(x).view(-1, 1)
+        logits = self.model(x).view(-1, self.num_classes)
 
         return logits
 
@@ -327,7 +328,11 @@ def calculate_model_size_mb(model: torch.nn.Module) -> float:
     Returns:
         float, size in megabytes
     """
-    return sum(p.numel() for p in model.parameters()) * 4 / 1024 / 1024
+
+    model_size_mb = sum(p.numel() for p in model.parameters()) * 4 / 1024 / 1024
+    print(f"Loaded classification model with size {model_size_mb} MB")
+
+    return model_size_mb
 
 
 def debug_model(batch_size: int = 1):

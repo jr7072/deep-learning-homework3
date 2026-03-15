@@ -15,7 +15,7 @@ def train_detection(
 ) -> None:
 
 
-    raise NotImplementedError('classification not implemented')
+    raise NotImplementedError('detection not implemented')
 
 
 def train_classification(
@@ -41,11 +41,11 @@ def train_classification(
     np.random.seed(seed)
 
     # setting the tensorboard logger
-    log_dir = f'classification/classification_{datetime.now().strftime('%m%d_%H%M%S')}'
+    log_dir = f'classifier/classifier_{datetime.now().strftime("%m%d_%H%M%S")}'
     logger = tb.SummaryWriter(log_dir)
 
     # load the model and place it in training mode
-    model = load_model('classification', **kwargs)
+    model = load_model('classifier')
     model = model.to(device)
     model.train()
 
@@ -62,7 +62,7 @@ def train_classification(
 
     # training loop
     global_step = 0
-    for epoch in num_epoch:
+    for epoch in range(num_epoch):
         
         # metric reset
         train_accuracy_obj.reset()
@@ -106,12 +106,14 @@ def train_classification(
             val_accuracy_obj.add(preds, labels)
 
         # train metrics
-        train_accuracy = train_accuracy_obj.compute()
-        logger.add_scaler('train/acc', train_accuracy, global_step)
+        train_metrics = train_accuracy_obj.compute()
+        train_accuracy = train_metrics['accuracy']
+        logger.add_scalar('train/acc', train_accuracy, global_step)
 
         # val metrics
-        val_accuracy = val_accuracy_obj.compute()
-        logger.add_scaler('val/acc', val_accuracy, global_step)
+        val_metrics = val_accuracy_obj.compute()
+        val_accuracy = val_metrics['accuracy']
+        logger.add_scalar('val/acc', val_accuracy, global_step)
 
         if epoch == 0 or epoch == num_epoch - 1 or (epoch + 1) % 10 == 0:
             print(
@@ -124,5 +126,5 @@ def train_classification(
     save_model(model)
 
     # save a copy to the log dir
-    torch.save(model.state_dict(), log_dir + '/classification.th')
-    print(f'saved model to {log_dir}/classification.th')
+    torch.save(model.state_dict(), log_dir + '/classifier.th')
+    print(f'saved model to {log_dir}/classifier.th')

@@ -3,7 +3,7 @@ from .train_utils import train_classification, train_detection
 
 TRAINER_FACTORY = {
     'classification': train_classification,
-    'detector': train_detection
+    'detection': train_detection
 }
 
 
@@ -15,6 +15,7 @@ if __name__ == '__main__':
     parser.add_argument("--num_epoch", type=int, default=50)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--seed", type=int, default=2024)
+    parser.add_argument("--batch_size", type=int, default=128)
 
     args = parser.parse_args()
     
