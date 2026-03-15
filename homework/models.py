@@ -16,6 +16,7 @@ class InvertedResBlock(nn.Module):
         out_channels: int,
         exp_factor: int,
         stride: int,
+        **kwargs
     ) -> None:
         """
             Inverted residual block for mobile net v2
@@ -56,12 +57,13 @@ class InvertedResBlock(nn.Module):
         ]
 
         # define the residual connection
-        if in_channels == out_channels:
-            self.residual = torch.nn.Identity()
+        self.residual = torch.nn.Conv2d(
+            in_channels,
+            out_channels,
+            kernel_size=1,
+            stride=stride
+        )
         
-        else:
-            self.residual = torch.nn.Conv2d(in_channels, out_channels, kernel_size=1)
-
         self.block = torch.nn.Sequential(*layers)
     
     def forward(self, x: torch.tensor) -> torch.tensor:
@@ -87,8 +89,83 @@ class Classifier(nn.Module):
         self.register_buffer("input_mean", torch.as_tensor(INPUT_MEAN))
         self.register_buffer("input_std", torch.as_tensor(INPUT_STD))
 
-        # TODO: implement
-        pass
+        block_arch_def = [
+            {
+                'exp_factor': 6,
+                'out_channels': 32,
+                'reps': 3,
+                'stride': 2 
+            },
+            {
+                'exp_factor': 6,
+                'out_channels': 64,
+                'reps': 4,
+                'stride': 2 
+            },
+            {
+                'exp_factor': 6,
+                'out_channels': 96,
+                'reps': 3,
+                'stride': 1 
+            },
+            {
+                'exp_factor': 6,
+                'out_channels': 160,
+                'reps': 3,
+                'stride': 2 
+            },
+            {
+                'exp_factor': 6,
+                'out_channels': 320,
+                'reps': 1,
+                'stride': 1 
+            },
+        ]
+
+        layers = [
+            torch.nn.Conv2d(
+                in_channels,
+                out_channels=32,
+                kernel_size=3,
+                stride=2,
+                padding=1
+            ),
+            torch.nn.BatchNorm2d(32),
+            torch.nn.ReLU6()
+        ]
+
+        o = 32
+        for res_args in block_arch_def:
+
+            for n in range(res_args['reps']):
+
+                block_out_channels = res_args['out_channels']
+                block_exp_factor = res_args['exp_factor']
+                block_stride = res_args['stride']
+
+                if n > 0:
+                    block_stride = 1
+
+                layers.append(
+                    InvertedResBlock(
+                        o,
+                        out_channels=block_out_channels,
+                        exp_factor=block_exp_factor,
+                        stride=block_stride
+                    )
+                )
+
+                o = res_args['out_channels']
+
+        # final layers
+        layers.append(torch.nn.Conv2d(o, 1280, kernel_size=1))
+        layers.append(torch.nn.BatchNorm2d(1280))
+        layers.append(torch.nn.ReLU6())
+        layers.append(torch.nn.AdaptiveAvgPool2d(1))
+        layers.append(torch.nn.ReLU6())
+        layers.append(torch.nn.Conv2d(1280, num_classes, kernel_size=1))
+        
+        self.model = torch.nn.Sequential(*layers)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -99,10 +176,11 @@ class Classifier(nn.Module):
             tensor (b, num_classes) logits
         """
         # optional: normalizes the input
-        z = (x - self.input_mean[None, :, None, None]) / self.input_std[None, :, None, None]
+        # z = (x - self.input_mean[None, :, None, None]) / self.input_std[None, :, None, None]
+
 
         # TODO: replace with actual forward pass
-        logits = torch.randn(x.size(0), 6)
+        logits = self.model(x).view(-1, 1)
 
         return logits
 
