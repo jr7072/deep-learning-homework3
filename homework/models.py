@@ -8,6 +8,100 @@ INPUT_MEAN = [0.2788, 0.2657, 0.2629]
 INPUT_STD = [0.2064, 0.1944, 0.2252]
 
 
+class ConvBlock(torch.nn.Module):
+
+    def __init__(
+        self,
+        in_channels: int,
+        out_channels: int,
+        kernel_size: int,
+        padding: int=0,
+        stride: int=1
+    ):
+        
+        super().__init__()
+
+        layers = [
+            torch.nn.Conv2d(
+                in_channels,
+                out_channels,
+                kernel_size=kernel_size,
+                padding=padding,
+                stride=stride
+            ),
+            torch.nn.BatchNorm2d(
+                out_channels
+            ),
+            torch.nn.ReLU()
+        ]
+
+        self.block = torch.nn.Sequential(*layers)
+    
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.block(x)
+
+
+class EncoderBlock(torch.nn.Module):
+
+    def __init__(
+        self,
+        in_channels: int,
+        out_channels: int,   
+    ):
+        
+        super().__init__()
+        
+        layers = [
+            ConvBlock(
+                in_channels,
+                out_channels,
+                kernel_size=3,
+                padding=1
+            ),
+            ConvBlock(
+                out_channels,
+                out_channels,
+                kernel_size=3,
+                padding=1,
+                stride=2
+            )
+        ]
+
+        self.block = torch.nn.Sequential(*layers)
+    
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.block(x)
+
+
+class UpsampleBlock(torch.nn.Module):
+
+    def __init__(
+        self,
+        in_channels: int,
+        out_channels: int
+    ):
+        
+        super().__init__()
+
+        layers = [
+            torch.nn.ConvTranspose2d(
+                in_channels,
+                out_channels,
+                kernel_size=3,
+                padding=1,
+                output_padding=1,
+                stride=2
+            ),
+            torch.nn.BatchNorm2d(out_channels),
+            torch.nn.ReLU()
+        ]
+
+        self.block = torch.nn.Sequential(*layers)
+    
+    def forward(self, x: torch.Tensor) -> torch.Tensor: 
+        return self.block(x)
+
+
 class InvertedResBlock(nn.Module):
 
     def __init__(
@@ -201,7 +295,9 @@ class Classifier(nn.Module):
         return self(x).argmax(dim=1)
 
 
+
 class Detector(torch.nn.Module):
+
     def __init__(
         self,
         in_channels: int = 3,
@@ -219,8 +315,79 @@ class Detector(torch.nn.Module):
         self.register_buffer("input_mean", torch.as_tensor(INPUT_MEAN))
         self.register_buffer("input_std", torch.as_tensor(INPUT_STD))
 
-        # TODO: implement
-        pass
+        # first conv layer
+        self.first_layer = ConvBlock(
+            in_channels,
+            32,
+            kernel_size=3,
+            padding=1
+        )
+
+        # encoding layers
+        self.encoder_layers = list()
+        current_output_size = 32
+        for _ in range(4):
+
+            self.encoder_layers.append(
+                EncoderBlock(
+                    current_output_size,
+                    current_output_size * 2
+                )
+            )
+
+            current_output_size *= 2
+
+        
+        # bottleneck layers
+        self.bottleneck_layers = [
+            ConvBlock(
+                current_output_size,
+                current_output_size * 2,
+                kernel_size=3,
+                padding=1
+            ),
+            ConvBlock(
+                current_output_size * 2,
+                current_output_size,
+                kernel_size=3,
+                padding=1
+            )
+        ]
+
+        self.bottleneck = torch.nn.Sequential(*self.bottleneck_layers)
+        
+        # define decode layers
+        self.decode_layers = list()
+        for _ in self.encoder_layers:
+
+            first_decode_layer = ConvBlock(
+                current_output_size,
+                current_output_size,
+                kernel_size=3,
+                padding=1
+            )
+
+            upsample_layer = UpsampleBlock(
+                current_output_size * 2,
+                current_output_size // 2
+            )
+
+            self.decode_layers.append((first_decode_layer, upsample_layer))
+
+            current_output_size //= 2
+
+        # output transformations
+        self.logit_head = ConvBlock(
+            current_output_size,
+            num_classes,
+            kernel_size=1
+        )
+
+        self.depth_head = ConvBlock(
+            current_output_size,
+            1,
+            kernel_size=1
+        )
 
     def forward(self, x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
         """
@@ -236,11 +403,45 @@ class Detector(torch.nn.Module):
                 - depth (b, h, w)
         """
         # optional: normalizes the input
-        z = (x - self.input_mean[None, :, None, None]) / self.input_std[None, :, None, None]
+        # z = (x - self.input_mean[None, :, None, None]) / self.input_std[None, :, None, None]
 
-        # TODO: replace with actual forward pass
-        logits = torch.randn(x.size(0), 3, x.size(2), x.size(3))
-        raw_depth = torch.rand(x.size(0), x.size(2), x.size(3))
+        # first full convolution
+        current_map = self.first_layer(x)
+        
+        # encoder layers
+        encoder_feature_maps = list()
+        for encoder in self.encoder_layers:
+
+            encoder_feature_map = encoder(current_map)
+
+            # save these for res connections between decoder and encoder
+            encoder_feature_maps.append(encoder_feature_map)
+            current_map = encoder_feature_map
+        
+        # bottleneck
+        x = self.bottleneck(current_map)
+
+        zip_decode_iter = zip(
+            self.decode_layers,
+            reversed(encoder_feature_maps) # iterate through encoder map stack
+        )
+        # decode layers
+        for (fl, upsample), encoder_feature_map in zip_decode_iter:
+            
+            # concat the first layer with the encoder map
+            x = torch.concat([fl(x), encoder_feature_map], dim=1)
+
+            # upsample the concatenation
+            x = upsample(x)
+
+        # output transformation heads
+        logits = self.logit_head(x)
+        raw_depth = self.depth_head(x)
+
+        # reshape the raw depth to remove channel dim
+        rd_1 = raw_depth.shape[-2]
+        rd_2 = raw_depth.shape[-1]
+        raw_depth = raw_depth.reshape(-1, rd_1, rd_2)
 
         return logits, raw_depth
 

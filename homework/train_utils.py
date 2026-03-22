@@ -3,8 +3,27 @@ import torch
 import torch.utils.tensorboard as tb
 import numpy as np
 from .models import load_model, save_model
-from .datasets.classification_dataset import load_data
-from .metrics import ConfusionMatrix, AccuracyMetric, DetectionMetric
+from .datasets.classification_dataset import load_data as load_classification_data
+from .datasets.road_dataset import load_data as load_drive_data
+from .metrics import AccuracyMetric, DetectionMetric
+
+def get_device() -> torch.DeviceObjType:
+    '''
+        loads the device to use for training
+    '''
+
+    if torch.cuda.is_available():
+        device = torch.device("cuda")
+
+    elif torch.backends.mps.is_available() and torch.backends.mps.is_built():
+        device = torch.device("mps")
+
+    else:
+        print("CUDA not available, using CPU")
+        device = torch.device("cpu")
+
+    return device
+
 
 def train_detection(
     num_epoch: int = 50,
@@ -14,8 +33,166 @@ def train_detection(
     **kwargs
 ) -> None:
 
+    device = get_device()
 
-    raise NotImplementedError('detection not implemented')
+    # set manual seed
+    torch.manual_seed(seed)
+    np.random.seed(seed)
+
+    # set the log dir
+    log_dir = f'detector/detector_{datetime.now().strftime("%m%d_%H%M%S")}'
+    logger = tb.SummaryWriter(log_dir)
+
+    # load the model
+    model = load_model('detector')
+    model = model.to(device)
+    model.train()
+
+    # load the data
+    train_data = load_drive_data('drive_data/train', shuffle=True, batch_size=batch_size)
+    val_data = load_drive_data('drive_data/val', batch_size=batch_size)
+
+
+    optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=4e-5)
+    
+    # create metric obj here
+    train_metric = DetectionMetric()
+    val_metric = DetectionMetric()
+    
+    # training loop
+    global_step = 0
+    for epoch in range(num_epoch):
+
+        # reset the metric here
+        train_metric.reset()
+        val_metric.reset()
+        
+        model.train()
+        # pass through the training data batch
+        for data in train_data:
+            
+            images = data['image']
+            depth_labels = data['depth']
+            track_labels = data['track']
+
+            track_logits, depth_pred = model(images)
+
+            # capture the accuracy here
+            pred = track_logits.argmax(dim=1)
+            train_metric.add(
+                pred,
+                track_labels,
+                depth_pred,
+                depth_labels
+            )
+
+            # backpropogate with a combined loss
+            track_loss = torch.nn.functional.cross_entropy(
+                track_logits,
+                track_labels
+            )
+
+            depth_loss = torch.nn.functional.mse_loss(
+                depth_pred,
+                depth_labels
+            )
+
+            loss = track_loss + depth_loss
+
+            logger.add_scalar(
+                'train/loss',
+                loss,
+                global_step=global_step
+            )
+
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+
+            global_step += 1
+
+        # validation pass
+        model.eval()
+        for data in val_data:
+            
+            images = data['image']
+            depth_labels = data['depth']
+            track_labels = data['track']
+
+            track_preds, depth_preds = model.predict(images)
+            
+            # capture the accuracy here
+            val_metric.add(
+                track_preds,
+                track_labels,
+                depth_preds,
+                depth_labels
+            )
+
+        # calculate metrics
+        train_results = train_metric.compute()
+        val_results = val_metric.compute()
+
+        # record train metrics
+        train_iou = train_results['iou']
+        train_abs_depth_err = train_results['abs_depth_error']
+        train_tp_depth_err = train_results['tp_depth_error']
+
+        logger.add_scalar(
+            'train/iou',
+            train_iou,
+            global_step=global_step
+        )
+        logger.add_scalar(
+            'train/abs_depth_err',
+            train_abs_depth_err,
+            global_step=global_step
+        )
+        logger.add_scalar(
+            'train/tp_depth_err',
+            train_tp_depth_err,
+            global_step=global_step
+        )
+
+        # record val metrics
+        val_iou = val_results['iou']
+        val_abs_depth_err = val_results['abs_depth_error']
+        val_tp_depth_err = val_results['tp_depth_error']
+        
+        logger.add_scalar(
+            'val/iou',
+            val_iou,
+            global_step=global_step
+        )
+        logger.add_scalar(
+            'val/abs_depth_err',
+            val_abs_depth_err,
+            global_step=global_step
+        )
+        logger.add_scalar(
+            'val/tp_depth_err',
+            val_tp_depth_err,
+            global_step=global_step
+        )
+
+        if epoch == 0 or epoch == num_epoch - 1 or (epoch + 1) % 10 == 0:
+
+            print(
+                f"Epoch {epoch + 1:2d} / {num_epoch:2d}:\n"
+                f"\ttrain_iou={train_iou:.4f} "
+                f"val_iou={train_iou:.4f}\n"
+                f"\ttrain_abs_depth_error={train_abs_depth_err:.4} "
+                f"val_abs_depth_error={val_abs_depth_err:.4}\n"
+                f"\ttrain_tp_depth_error={train_tp_depth_err:.4} "
+                f"val_tp_depth_error={val_tp_depth_err:.4}"
+            )
+
+    # save trained model here
+    save_model(model)
+
+    # save a copy to the log dir
+    torch.save(model.state_dict(), log_dir + '/detector.th')
+    print(f'saved model to {log_dir}/detector.th')
 
 
 def train_classification(
@@ -26,15 +203,7 @@ def train_classification(
     **kwargs
 ) -> None:
     
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-
-    elif torch.backends.mps.is_available() and torch.backends.mps.is_built():
-        device = torch.device("mps")
-
-    else:
-        print("CUDA not available, using CPU")
-        device = torch.device("cpu")
+    device = get_device()
     
     # setting manual seed
     torch.manual_seed(seed)
@@ -50,8 +219,8 @@ def train_classification(
     model.train()
 
     # load the train and validation sets
-    train_data = load_data('classification_data/train', shuffle=True, batch_size=batch_size, transform_pipeline='aug')
-    val_data = load_data('classification_data/val', batch_size=batch_size)
+    train_data = load_classification_data('classification_data/train', shuffle=True, batch_size=batch_size, transform_pipeline='aug')
+    val_data = load_classification_data('classification_data/val', batch_size=batch_size)
 
     # start the optimizer
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=4e-5)
