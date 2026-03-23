@@ -324,9 +324,9 @@ class Detector(torch.nn.Module):
         )
 
         # encoding layers
-        self.encoder_layers = list()
+        self.encoder_layers = torch.nn.ModuleList()
         current_output_size = 32
-        for _ in range(4):
+        for _ in range(3):
 
             self.encoder_layers.append(
                 EncoderBlock(
@@ -357,7 +357,7 @@ class Detector(torch.nn.Module):
         self.bottleneck = torch.nn.Sequential(*self.bottleneck_layers)
         
         # define decode layers
-        self.decode_layers = list()
+        self.decode_layers = torch.nn.ModuleList()
         for _ in self.encoder_layers:
 
             first_decode_layer = ConvBlock(
@@ -372,7 +372,8 @@ class Detector(torch.nn.Module):
                 current_output_size // 2
             )
 
-            self.decode_layers.append((first_decode_layer, upsample_layer))
+            decode_package = torch.nn.ModuleList([first_decode_layer, upsample_layer])
+            self.decode_layers.append(decode_package)
 
             current_output_size //= 2
 

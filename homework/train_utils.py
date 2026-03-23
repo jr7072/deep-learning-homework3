@@ -49,9 +49,9 @@ def train_detection(
     model.train()
 
     # load the data
+    print("loading drive data")
     train_data = load_drive_data('drive_data/train', shuffle=True, batch_size=batch_size)
     val_data = load_drive_data('drive_data/val', batch_size=batch_size)
-
 
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=4e-5)
     
@@ -59,6 +59,7 @@ def train_detection(
     train_metric = DetectionMetric()
     val_metric = DetectionMetric()
     
+    print(f'started training loop')
     # training loop
     global_step = 0
     for epoch in range(num_epoch):
@@ -71,16 +72,16 @@ def train_detection(
         # pass through the training data batch
         for data in train_data:
             
-            images = data['image']
-            depth_labels = data['depth']
-            track_labels = data['track']
+            images = data['image'].to(device)
+            depth_labels = data['depth'].to(device)
+            track_labels = data['track'].to(device)
 
             track_logits, depth_pred = model(images)
 
             # capture the accuracy here
-            pred = track_logits.argmax(dim=1)
+            track_pred = track_logits.argmax(dim=1)
             train_metric.add(
-                pred,
+                track_pred,
                 track_labels,
                 depth_pred,
                 depth_labels
@@ -97,6 +98,7 @@ def train_detection(
                 depth_labels
             )
 
+            # combine the losses
             loss = track_loss + depth_loss
 
             logger.add_scalar(
@@ -115,9 +117,9 @@ def train_detection(
         model.eval()
         for data in val_data:
             
-            images = data['image']
-            depth_labels = data['depth']
-            track_labels = data['track']
+            images = data['image'].to(device)
+            depth_labels = data['depth'].to(device)
+            track_labels = data['track'].to(device)
 
             track_preds, depth_preds = model.predict(images)
             
@@ -158,7 +160,7 @@ def train_detection(
         val_iou = val_results['iou']
         val_abs_depth_err = val_results['abs_depth_error']
         val_tp_depth_err = val_results['tp_depth_error']
-        
+
         logger.add_scalar(
             'val/iou',
             val_iou,
@@ -180,7 +182,7 @@ def train_detection(
             print(
                 f"Epoch {epoch + 1:2d} / {num_epoch:2d}:\n"
                 f"\ttrain_iou={train_iou:.4f} "
-                f"val_iou={train_iou:.4f}\n"
+                f"val_iou={val_iou:.4f}\n"
                 f"\ttrain_abs_depth_error={train_abs_depth_err:.4} "
                 f"val_abs_depth_error={val_abs_depth_err:.4}\n"
                 f"\ttrain_tp_depth_error={train_tp_depth_err:.4} "
