@@ -6,6 +6,7 @@ from .models import load_model, save_model
 from .datasets.classification_dataset import load_data as load_classification_data
 from .datasets.road_dataset import load_data as load_drive_data
 from .metrics import AccuracyMetric, DetectionMetric
+from .loss import MultiClassFocalLoss
 
 def get_device() -> torch.DeviceObjType:
     '''
@@ -58,6 +59,9 @@ def train_detection(
     # create metric obj here
     train_metric = DetectionMetric()
     val_metric = DetectionMetric()
+
+    # define focal loss
+    mcf_loss = MultiClassFocalLoss()
     
     print(f'started training loop')
     # training loop
@@ -88,10 +92,9 @@ def train_detection(
             )
 
             # backpropogate with a combined loss
-            track_loss = torch.nn.functional.cross_entropy(
+            track_loss = mcf_loss(
                 track_logits,
-                track_labels,
-                ignore_index=0 # ignore the background
+                track_labels
             )
 
             depth_loss = torch.nn.functional.mse_loss(
