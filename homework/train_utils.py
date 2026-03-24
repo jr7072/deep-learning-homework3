@@ -90,7 +90,8 @@ def train_detection(
             # backpropogate with a combined loss
             track_loss = torch.nn.functional.cross_entropy(
                 track_logits,
-                track_labels
+                track_labels,
+                ignore_index=0 # ignore the background
             )
 
             depth_loss = torch.nn.functional.mse_loss(
