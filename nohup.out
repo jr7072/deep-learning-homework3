@@ -1,0 +1,591 @@
+/workspace/conda-envs/deep-learning/lib/python3.11/site-packages/tensorboard/default.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+TensorFlow installation not found - running with reduced feature set.
+
+NOTE: Using experimental fast data loading logic. To disable, pass
+    "--load_fast=false" and report issues on GitHub. More details:
+    https://github.com/tensorflow/tensorboard/issues/4784
+
+TensorBoard 2.20.0 at http://0.0.0.0:8080/ (Press CTRL+C to quit)
+/workspace/conda-envs/deep-learning/lib/python3.11/site-packages/tensorboard/default.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+TensorFlow installation not found - running with reduced feature set.
+
+NOTE: Using experimental fast data loading logic. To disable, pass
+    "--load_fast=false" and report issues on GitHub. More details:
+    https://github.com/tensorflow/tensorboard/issues/4784
+
+TensorBoard 2.20.0 at http://0.0.0.0:8080/ (Press CTRL+C to quit)
+Loaded classification model with size 19.366867065429688 MB
+loading drive data
+Loaded 8000 samples from 16 episodes
+Loaded 2000 samples from 4 episodes
+started training loop
+Epoch  1 / 500:
+	train_iou=0.1257 val_iou=0.0246
+	train_abs_depth_error=0.5669 val_abs_depth_error=0.6808
+	train_tp_depth_error=0.5539 val_tp_depth_error=0.7228
+/workspace/conda-envs/deep-learning/lib/python3.11/site-packages/tensorboard/default.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+TensorFlow installation not found - running with reduced feature set.
+
+NOTE: Using experimental fast data loading logic. To disable, pass
+    "--load_fast=false" and report issues on GitHub. More details:
+    https://github.com/tensorflow/tensorboard/issues/4784
+
+E0325 00:55:36.943353 126831718655808 program.py:300] TensorBoard could not bind to port 8080, it was already in use
+ERROR: TensorBoard could not bind to port 8080, it was already in use
+Epoch 10 / 500:
+	train_iou=0.3230 val_iou=0.3230
+	train_abs_depth_error=0.1471 val_abs_depth_error=0.1461
+	train_tp_depth_error=0.1015 val_tp_depth_error=0.08543
+Epoch 20 / 500:
+	train_iou=0.3383 val_iou=0.3367
+	train_abs_depth_error=0.1026 val_abs_depth_error=0.1033
+	train_tp_depth_error=0.08546 val_tp_depth_error=0.08207
+Epoch 30 / 500:
+	train_iou=0.3568 val_iou=0.3559
+	train_abs_depth_error=0.08587 val_abs_depth_error=0.08664
+	train_tp_depth_error=0.0559 val_tp_depth_error=0.05374
+Epoch 40 / 500:
+	train_iou=0.3831 val_iou=0.3812
+	train_abs_depth_error=0.07567 val_abs_depth_error=0.07697
+	train_tp_depth_error=0.06119 val_tp_depth_error=0.06118
+Epoch 50 / 500:
+	train_iou=0.4137 val_iou=0.4119
+	train_abs_depth_error=0.06724 val_abs_depth_error=0.06778
+	train_tp_depth_error=0.06054 val_tp_depth_error=0.06068
+Epoch 60 / 500:
+	train_iou=0.4432 val_iou=0.4395
+	train_abs_depth_error=0.05645 val_abs_depth_error=0.05662
+	train_tp_depth_error=0.04772 val_tp_depth_error=0.04771
+Epoch 70 / 500:
+	train_iou=0.4666 val_iou=0.4669
+	train_abs_depth_error=0.04893 val_abs_depth_error=0.0494
+	train_tp_depth_error=0.04825 val_tp_depth_error=0.04766
+Epoch 80 / 500:
+	train_iou=0.4873 val_iou=0.4862
+	train_abs_depth_error=0.04432 val_abs_depth_error=0.04471
+	train_tp_depth_error=0.04982 val_tp_depth_error=0.04958
+Epoch 90 / 500:
+	train_iou=0.4988 val_iou=0.4886
+	train_abs_depth_error=0.04113 val_abs_depth_error=0.04215
+	train_tp_depth_error=0.05093 val_tp_depth_error=0.05191
+Epoch 100 / 500:
+	train_iou=0.5479 val_iou=0.5497
+	train_abs_depth_error=0.03911 val_abs_depth_error=0.03985
+	train_tp_depth_error=0.04983 val_tp_depth_error=0.04794
+Epoch 110 / 500:
+	train_iou=0.5737 val_iou=0.5715
+	train_abs_depth_error=0.03786 val_abs_depth_error=0.03846
+	train_tp_depth_error=0.05111 val_tp_depth_error=0.05128
+Epoch 120 / 500:
+	train_iou=0.6011 val_iou=0.5966
+	train_abs_depth_error=0.03576 val_abs_depth_error=0.03662
+	train_tp_depth_error=0.04934 val_tp_depth_error=0.04947
+Epoch 130 / 500:
+	train_iou=0.6212 val_iou=0.6199
+	train_abs_depth_error=0.03379 val_abs_depth_error=0.0343
+	train_tp_depth_error=0.04505 val_tp_depth_error=0.04456
+Epoch 140 / 500:
+	train_iou=0.6346 val_iou=0.6259
+	train_abs_depth_error=0.03195 val_abs_depth_error=0.03241
+	train_tp_depth_error=0.04312 val_tp_depth_error=0.04243
+Epoch 150 / 500:
+	train_iou=0.6456 val_iou=0.6344
+	train_abs_depth_error=0.03059 val_abs_depth_error=0.03108
+	train_tp_depth_error=0.04175 val_tp_depth_error=0.04095
+Epoch 160 / 500:
+	train_iou=0.6539 val_iou=0.6400
+	train_abs_depth_error=0.02957 val_abs_depth_error=0.02987
+	train_tp_depth_error=0.04079 val_tp_depth_error=0.0404
+Epoch 170 / 500:
+	train_iou=0.6653 val_iou=0.6482
+	train_abs_depth_error=0.02861 val_abs_depth_error=0.02908
+	train_tp_depth_error=0.03975 val_tp_depth_error=0.03876
+Epoch 180 / 500:
+	train_iou=0.6681 val_iou=0.6514
+	train_abs_depth_error=0.02829 val_abs_depth_error=0.02852
+	train_tp_depth_error=0.03921 val_tp_depth_error=0.0387
+Epoch 190 / 500:
+	train_iou=0.6776 val_iou=0.6564
+	train_abs_depth_error=0.02689 val_abs_depth_error=0.0272
+	train_tp_depth_error=0.03814 val_tp_depth_error=0.03785
+Epoch 200 / 500:
+	train_iou=0.6884 val_iou=0.6657
+	train_abs_depth_error=0.0265 val_abs_depth_error=0.02657
+	train_tp_depth_error=0.03744 val_tp_depth_error=0.03664
+Epoch 210 / 500:
+	train_iou=0.6937 val_iou=0.6637
+	train_abs_depth_error=0.02586 val_abs_depth_error=0.02598
+	train_tp_depth_error=0.03686 val_tp_depth_error=0.03631
+Epoch 220 / 500:
+	train_iou=0.7007 val_iou=0.6698
+	train_abs_depth_error=0.02496 val_abs_depth_error=0.02529
+	train_tp_depth_error=0.03587 val_tp_depth_error=0.0357
+Epoch 230 / 500:
+	train_iou=0.7036 val_iou=0.6873
+	train_abs_depth_error=0.02487 val_abs_depth_error=0.0248
+	train_tp_depth_error=0.03534 val_tp_depth_error=0.03379
+Epoch 240 / 500:
+	train_iou=0.7107 val_iou=0.6896
+	train_abs_depth_error=0.02431 val_abs_depth_error=0.02451
+	train_tp_depth_error=0.03458 val_tp_depth_error=0.03294
+Epoch 250 / 500:
+	train_iou=0.7247 val_iou=0.6857
+	train_abs_depth_error=0.02343 val_abs_depth_error=0.02364
+	train_tp_depth_error=0.03333 val_tp_depth_error=0.03314
+Epoch 260 / 500:
+	train_iou=0.7276 val_iou=0.6883
+	train_abs_depth_error=0.02391 val_abs_depth_error=0.02346
+	train_tp_depth_error=0.03343 val_tp_depth_error=0.03267
+Epoch 270 / 500:
+	train_iou=0.7314 val_iou=0.7052
+	train_abs_depth_error=0.02292 val_abs_depth_error=0.02294
+	train_tp_depth_error=0.03212 val_tp_depth_error=0.03061
+Epoch 280 / 500:
+	train_iou=0.7386 val_iou=0.6993
+	train_abs_depth_error=0.02227 val_abs_depth_error=0.02257
+	train_tp_depth_error=0.03102 val_tp_depth_error=0.03047
+Epoch 290 / 500:
+	train_iou=0.7466 val_iou=0.7022
+	train_abs_depth_error=0.0225 val_abs_depth_error=0.02229
+	train_tp_depth_error=0.03061 val_tp_depth_error=0.02982
+Epoch 300 / 500:
+	train_iou=0.7512 val_iou=0.7097
+	train_abs_depth_error=0.02171 val_abs_depth_error=0.0219
+	train_tp_depth_error=0.02969 val_tp_depth_error=0.0287
+Epoch 310 / 500:
+	train_iou=0.7511 val_iou=0.7085
+	train_abs_depth_error=0.02163 val_abs_depth_error=0.02159
+	train_tp_depth_error=0.02905 val_tp_depth_error=0.02862
+Epoch 320 / 500:
+	train_iou=0.7577 val_iou=0.7102
+	train_abs_depth_error=0.02118 val_abs_depth_error=0.02122
+	train_tp_depth_error=0.02845 val_tp_depth_error=0.02746
+Epoch 330 / 500:
+	train_iou=0.7704 val_iou=0.7228
+	train_abs_depth_error=0.02075 val_abs_depth_error=0.02093
+	train_tp_depth_error=0.02755 val_tp_depth_error=0.02652
+Epoch 340 / 500:
+	train_iou=0.7775 val_iou=0.7208
+	train_abs_depth_error=0.02064 val_abs_depth_error=0.02067
+	train_tp_depth_error=0.02676 val_tp_depth_error=0.02619
+Epoch 350 / 500:
+	train_iou=0.7774 val_iou=0.7227
+	train_abs_depth_error=0.02088 val_abs_depth_error=0.02072
+	train_tp_depth_error=0.02667 val_tp_depth_error=0.02549
+Epoch 360 / 500:
+	train_iou=0.7839 val_iou=0.7213
+	train_abs_depth_error=0.02002 val_abs_depth_error=0.02015
+	train_tp_depth_error=0.02572 val_tp_depth_error=0.02517
+Epoch 370 / 500:
+	train_iou=0.7872 val_iou=0.7235
+	train_abs_depth_error=0.02006 val_abs_depth_error=0.02
+	train_tp_depth_error=0.02537 val_tp_depth_error=0.02482
+Epoch 380 / 500:
+	train_iou=0.7903 val_iou=0.7264
+	train_abs_depth_error=0.01964 val_abs_depth_error=0.01971
+	train_tp_depth_error=0.02491 val_tp_depth_error=0.02431
+Epoch 390 / 500:
+	train_iou=0.7896 val_iou=0.7242
+	train_abs_depth_error=0.01955 val_abs_depth_error=0.01972
+	train_tp_depth_error=0.0248 val_tp_depth_error=0.02411
+Epoch 400 / 500:
+	train_iou=0.7964 val_iou=0.7278
+	train_abs_depth_error=0.0192 val_abs_depth_error=0.01933
+	train_tp_depth_error=0.0244 val_tp_depth_error=0.02387
+Epoch 410 / 500:
+	train_iou=0.7901 val_iou=0.7271
+	train_abs_depth_error=0.0193 val_abs_depth_error=0.01941
+	train_tp_depth_error=0.02441 val_tp_depth_error=0.02367
+Epoch 420 / 500:
+	train_iou=0.7988 val_iou=0.7293
+	train_abs_depth_error=0.01895 val_abs_depth_error=0.01904
+	train_tp_depth_error=0.02411 val_tp_depth_error=0.02345
+Epoch 430 / 500:
+	train_iou=0.8009 val_iou=0.7270
+	train_abs_depth_error=0.02037 val_abs_depth_error=0.01948
+	train_tp_depth_error=0.02497 val_tp_depth_error=0.0231
+Epoch 440 / 500:
+	train_iou=0.7979 val_iou=0.7287
+	train_abs_depth_error=0.01914 val_abs_depth_error=0.01884
+	train_tp_depth_error=0.02422 val_tp_depth_error=0.02312
+Epoch 450 / 500:
+	train_iou=0.8032 val_iou=0.7331
+	train_abs_depth_error=0.01889 val_abs_depth_error=0.01878
+	train_tp_depth_error=0.02365 val_tp_depth_error=0.02256
+Epoch 460 / 500:
+	train_iou=0.8055 val_iou=0.7300
+	train_abs_depth_error=0.01847 val_abs_depth_error=0.0186
+	train_tp_depth_error=0.02306 val_tp_depth_error=0.02247
+Epoch 470 / 500:
+	train_iou=0.8067 val_iou=0.7299
+	train_abs_depth_error=0.01864 val_abs_depth_error=0.01849
+	train_tp_depth_error=0.0233 val_tp_depth_error=0.02234
+Loaded classification model with size 19.366867065429688 MB
+loading drive data
+Loaded 8000 samples from 16 episodes
+Loaded 2000 samples from 4 episodes
+started training loop
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/deep-learning-homework3/homework/train.py", line 31, in <module>
+    train_function(**function_args)
+  File "/workspace/deep-learning-homework3/homework/train_utils.py", line 83, in train_detection
+    track_logits, depth_pred = model(images)
+                               ^^^^^^^^^^^^^
+  File "/workspace/conda-envs/deep-learning/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/conda-envs/deep-learning/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/deep-learning-homework3/homework/models.py", line 433, in forward
+    x = torch.concat([fl(x), encoder_feature_map], dim=1)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 384.00 MiB. GPU 0 has a total capacity of 94.97 GiB of which 72.44 MiB is free. Process 13217 has 76.13 GiB memory in use. Including non-PyTorch memory, this process has 18.76 GiB memory in use. Of the allocated memory 17.93 GiB is allocated by PyTorch, and 202.57 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+Epoch 480 / 500:
+	train_iou=0.8080 val_iou=0.7309
+	train_abs_depth_error=0.01843 val_abs_depth_error=0.01842
+	train_tp_depth_error=0.02284 val_tp_depth_error=0.02187
+Epoch 490 / 500:
+	train_iou=0.8132 val_iou=0.7350
+	train_abs_depth_error=0.01794 val_abs_depth_error=0.01808
+	train_tp_depth_error=0.02246 val_tp_depth_error=0.02165
+Epoch 500 / 500:
+	train_iou=0.8151 val_iou=0.7304
+	train_abs_depth_error=0.01807 val_abs_depth_error=0.01809
+	train_tp_depth_error=0.02233 val_tp_depth_error=0.02169
+saved model to detector/detector_0325_005519/detector.th
+Loaded classification model with size 19.366867065429688 MB
+loading drive data
+Loaded 8000 samples from 16 episodes
+Loaded 2000 samples from 4 episodes
+started training loop
+Epoch  1 / 800:
+	train_iou=0.1430 val_iou=0.3240
+	train_abs_depth_error=0.6188 val_abs_depth_error=0.6889
+	train_tp_depth_error=0.5574 val_tp_depth_error=0.0
+Epoch 10 / 800:
+	train_iou=0.3229 val_iou=0.3234
+	train_abs_depth_error=0.1325 val_abs_depth_error=0.1308
+	train_tp_depth_error=0.118 val_tp_depth_error=0.1414
+Epoch 20 / 800:
+	train_iou=0.3285 val_iou=0.3283
+	train_abs_depth_error=0.1088 val_abs_depth_error=0.1089
+	train_tp_depth_error=0.08211 val_tp_depth_error=0.08071
+Epoch 30 / 800:
+	train_iou=0.3606 val_iou=0.3606
+	train_abs_depth_error=0.0914 val_abs_depth_error=0.09158
+	train_tp_depth_error=0.07198 val_tp_depth_error=0.06944
+Epoch 40 / 800:
+	train_iou=0.3767 val_iou=0.3770
+	train_abs_depth_error=0.07672 val_abs_depth_error=0.07707
+	train_tp_depth_error=0.04562 val_tp_depth_error=0.04639
+Epoch 50 / 800:
+	train_iou=0.3766 val_iou=0.3707
+	train_abs_depth_error=0.06717 val_abs_depth_error=0.06692
+	train_tp_depth_error=0.04339 val_tp_depth_error=0.04399
+Epoch 60 / 800:
+	train_iou=0.4239 val_iou=0.4217
+	train_abs_depth_error=0.06001 val_abs_depth_error=0.05609
+	train_tp_depth_error=0.06384 val_tp_depth_error=0.06426
+Epoch 70 / 800:
+	train_iou=0.4943 val_iou=0.4968
+	train_abs_depth_error=0.04802 val_abs_depth_error=0.04728
+	train_tp_depth_error=0.05951 val_tp_depth_error=0.05883
+Epoch 80 / 800:
+	train_iou=0.5361 val_iou=0.5395
+	train_abs_depth_error=0.04493 val_abs_depth_error=0.04542
+	train_tp_depth_error=0.06858 val_tp_depth_error=0.06865
+Epoch 90 / 800:
+	train_iou=0.5574 val_iou=0.5673
+	train_abs_depth_error=0.04028 val_abs_depth_error=0.0408
+	train_tp_depth_error=0.05505 val_tp_depth_error=0.05412
+Epoch 100 / 800:
+	train_iou=0.5797 val_iou=0.5790
+	train_abs_depth_error=0.03601 val_abs_depth_error=0.03667
+	train_tp_depth_error=0.04547 val_tp_depth_error=0.04583
+Epoch 110 / 800:
+	train_iou=0.5986 val_iou=0.5963
+	train_abs_depth_error=0.03315 val_abs_depth_error=0.03324
+	train_tp_depth_error=0.04018 val_tp_depth_error=0.04035
+Epoch 120 / 800:
+	train_iou=0.6119 val_iou=0.5982
+	train_abs_depth_error=0.0312 val_abs_depth_error=0.03168
+	train_tp_depth_error=0.03772 val_tp_depth_error=0.03839
+Epoch 130 / 800:
+	train_iou=0.6261 val_iou=0.6205
+	train_abs_depth_error=0.02976 val_abs_depth_error=0.03035
+	train_tp_depth_error=0.03597 val_tp_depth_error=0.03503
+Epoch 140 / 800:
+	train_iou=0.6383 val_iou=0.6291
+	train_abs_depth_error=0.02891 val_abs_depth_error=0.02922
+	train_tp_depth_error=0.03504 val_tp_depth_error=0.03496
+Epoch 150 / 800:
+	train_iou=0.6418 val_iou=0.6395
+	train_abs_depth_error=0.02823 val_abs_depth_error=0.02867
+	train_tp_depth_error=0.03581 val_tp_depth_error=0.03529
+Epoch 160 / 800:
+	train_iou=0.6485 val_iou=0.6463
+	train_abs_depth_error=0.0277 val_abs_depth_error=0.02859
+	train_tp_depth_error=0.03665 val_tp_depth_error=0.03547
+Epoch 170 / 800:
+	train_iou=0.6526 val_iou=0.6406
+	train_abs_depth_error=0.02687 val_abs_depth_error=0.02747
+	train_tp_depth_error=0.03865 val_tp_depth_error=0.03745
+Epoch 180 / 800:
+	train_iou=0.6656 val_iou=0.6507
+	train_abs_depth_error=0.02551 val_abs_depth_error=0.02603
+	train_tp_depth_error=0.03543 val_tp_depth_error=0.03467
+Epoch 190 / 800:
+	train_iou=0.6743 val_iou=0.6606
+	train_abs_depth_error=0.02467 val_abs_depth_error=0.02505
+	train_tp_depth_error=0.03316 val_tp_depth_error=0.03264
+Epoch 200 / 800:
+	train_iou=0.6796 val_iou=0.6642
+	train_abs_depth_error=0.02399 val_abs_depth_error=0.02422
+	train_tp_depth_error=0.03185 val_tp_depth_error=0.03098
+Epoch 210 / 800:
+	train_iou=0.6897 val_iou=0.6695
+	train_abs_depth_error=0.0233 val_abs_depth_error=0.02365
+	train_tp_depth_error=0.03073 val_tp_depth_error=0.02969
+Epoch 220 / 800:
+	train_iou=0.6958 val_iou=0.6787
+	train_abs_depth_error=0.0229 val_abs_depth_error=0.02306
+	train_tp_depth_error=0.02969 val_tp_depth_error=0.02891
+Epoch 230 / 800:
+	train_iou=0.6998 val_iou=0.6827
+	train_abs_depth_error=0.02232 val_abs_depth_error=0.0226
+	train_tp_depth_error=0.02902 val_tp_depth_error=0.02808
+Epoch 240 / 800:
+	train_iou=0.7053 val_iou=0.6800
+	train_abs_depth_error=0.02201 val_abs_depth_error=0.02221
+	train_tp_depth_error=0.02824 val_tp_depth_error=0.02795
+Epoch 250 / 800:
+	train_iou=0.7080 val_iou=0.6917
+	train_abs_depth_error=0.02168 val_abs_depth_error=0.02187
+	train_tp_depth_error=0.02779 val_tp_depth_error=0.02686
+Epoch 260 / 800:
+	train_iou=0.7128 val_iou=0.6840
+	train_abs_depth_error=0.02133 val_abs_depth_error=0.02156
+	train_tp_depth_error=0.02729 val_tp_depth_error=0.02666
+Epoch 270 / 800:
+	train_iou=0.7190 val_iou=0.6922
+	train_abs_depth_error=0.02093 val_abs_depth_error=0.02124
+	train_tp_depth_error=0.02677 val_tp_depth_error=0.02612
+Epoch 280 / 800:
+	train_iou=0.7205 val_iou=0.6890
+	train_abs_depth_error=0.02125 val_abs_depth_error=0.02137
+	train_tp_depth_error=0.02625 val_tp_depth_error=0.02568
+Epoch 290 / 800:
+	train_iou=0.7229 val_iou=0.6963
+	train_abs_depth_error=0.02053 val_abs_depth_error=0.02055
+	train_tp_depth_error=0.02566 val_tp_depth_error=0.02513
+Epoch 300 / 800:
+	train_iou=0.7299 val_iou=0.6927
+	train_abs_depth_error=0.02027 val_abs_depth_error=0.02057
+	train_tp_depth_error=0.02535 val_tp_depth_error=0.02494
+Epoch 310 / 800:
+	train_iou=0.7276 val_iou=0.7014
+	train_abs_depth_error=0.02014 val_abs_depth_error=0.02016
+	train_tp_depth_error=0.0252 val_tp_depth_error=0.02416
+Epoch 320 / 800:
+	train_iou=0.7341 val_iou=0.7006
+	train_abs_depth_error=0.01988 val_abs_depth_error=0.01982
+	train_tp_depth_error=0.02449 val_tp_depth_error=0.02382
+Epoch 330 / 800:
+	train_iou=0.7423 val_iou=0.7022
+	train_abs_depth_error=0.01958 val_abs_depth_error=0.01985
+	train_tp_depth_error=0.02399 val_tp_depth_error=0.02357
+Epoch 340 / 800:
+	train_iou=0.7434 val_iou=0.7054
+	train_abs_depth_error=0.01931 val_abs_depth_error=0.01953
+	train_tp_depth_error=0.02364 val_tp_depth_error=0.02311
+Epoch 350 / 800:
+	train_iou=0.7440 val_iou=0.7076
+	train_abs_depth_error=0.01921 val_abs_depth_error=0.0194
+	train_tp_depth_error=0.02329 val_tp_depth_error=0.02269
+Epoch 360 / 800:
+	train_iou=0.7459 val_iou=0.7102
+	train_abs_depth_error=0.01902 val_abs_depth_error=0.01933
+	train_tp_depth_error=0.02302 val_tp_depth_error=0.02228
+Epoch 370 / 800:
+	train_iou=0.7518 val_iou=0.7102
+	train_abs_depth_error=0.01874 val_abs_depth_error=0.01905
+	train_tp_depth_error=0.02287 val_tp_depth_error=0.02196
+Epoch 380 / 800:
+	train_iou=0.7566 val_iou=0.7121
+	train_abs_depth_error=0.01857 val_abs_depth_error=0.01877
+	train_tp_depth_error=0.02244 val_tp_depth_error=0.02184
+Epoch 390 / 800:
+	train_iou=0.7592 val_iou=0.7131
+	train_abs_depth_error=0.01857 val_abs_depth_error=0.0186
+	train_tp_depth_error=0.02234 val_tp_depth_error=0.02149
+Epoch 400 / 800:
+	train_iou=0.7560 val_iou=0.7044
+	train_abs_depth_error=0.01846 val_abs_depth_error=0.01859
+	train_tp_depth_error=0.02212 val_tp_depth_error=0.02162
+Epoch 410 / 800:
+	train_iou=0.7676 val_iou=0.7173
+	train_abs_depth_error=0.01842 val_abs_depth_error=0.01833
+	train_tp_depth_error=0.02167 val_tp_depth_error=0.02097
+Epoch 420 / 800:
+	train_iou=0.7671 val_iou=0.7109
+	train_abs_depth_error=0.01802 val_abs_depth_error=0.01852
+	train_tp_depth_error=0.02155 val_tp_depth_error=0.02109
+Epoch 430 / 800:
+	train_iou=0.7742 val_iou=0.7185
+	train_abs_depth_error=0.01779 val_abs_depth_error=0.018
+	train_tp_depth_error=0.02132 val_tp_depth_error=0.02044
+Epoch 440 / 800:
+	train_iou=0.7700 val_iou=0.7157
+	train_abs_depth_error=0.01789 val_abs_depth_error=0.01799
+	train_tp_depth_error=0.02115 val_tp_depth_error=0.02056
+Epoch 450 / 800:
+	train_iou=0.7767 val_iou=0.7231
+	train_abs_depth_error=0.01753 val_abs_depth_error=0.01774
+	train_tp_depth_error=0.02092 val_tp_depth_error=0.02022
+Epoch 460 / 800:
+	train_iou=0.7820 val_iou=0.7243
+	train_abs_depth_error=0.01752 val_abs_depth_error=0.01754
+	train_tp_depth_error=0.02071 val_tp_depth_error=0.02018
+Epoch 470 / 800:
+	train_iou=0.7793 val_iou=0.7223
+	train_abs_depth_error=0.01728 val_abs_depth_error=0.01753
+	train_tp_depth_error=0.02059 val_tp_depth_error=0.01997
+Epoch 480 / 800:
+	train_iou=0.7865 val_iou=0.7272
+	train_abs_depth_error=0.01729 val_abs_depth_error=0.01738
+	train_tp_depth_error=0.02035 val_tp_depth_error=0.01967
+Epoch 490 / 800:
+	train_iou=0.7907 val_iou=0.7274
+	train_abs_depth_error=0.01761 val_abs_depth_error=0.01795
+	train_tp_depth_error=0.02037 val_tp_depth_error=0.01944
+Epoch 500 / 800:
+	train_iou=0.7886 val_iou=0.7226
+	train_abs_depth_error=0.01699 val_abs_depth_error=0.01719
+	train_tp_depth_error=0.0201 val_tp_depth_error=0.01936
+Epoch 510 / 800:
+	train_iou=0.7930 val_iou=0.7292
+	train_abs_depth_error=0.01689 val_abs_depth_error=0.01702
+	train_tp_depth_error=0.01988 val_tp_depth_error=0.01921
+Epoch 520 / 800:
+	train_iou=0.7942 val_iou=0.7246
+	train_abs_depth_error=0.01681 val_abs_depth_error=0.01688
+	train_tp_depth_error=0.01962 val_tp_depth_error=0.01883
+Epoch 530 / 800:
+	train_iou=0.8000 val_iou=0.7318
+	train_abs_depth_error=0.01661 val_abs_depth_error=0.01687
+	train_tp_depth_error=0.01932 val_tp_depth_error=0.01869
+Epoch 540 / 800:
+	train_iou=0.8041 val_iou=0.7318
+	train_abs_depth_error=0.01659 val_abs_depth_error=0.0167
+	train_tp_depth_error=0.0192 val_tp_depth_error=0.01851
+Epoch 550 / 800:
+	train_iou=0.6701 val_iou=0.6657
+	train_abs_depth_error=0.02 val_abs_depth_error=0.01945
+	train_tp_depth_error=0.02327 val_tp_depth_error=0.02257
+Epoch 560 / 800:
+	train_iou=0.7747 val_iou=0.7327
+	train_abs_depth_error=0.01702 val_abs_depth_error=0.01705
+	train_tp_depth_error=0.02188 val_tp_depth_error=0.01991
+Epoch 570 / 800:
+	train_iou=0.7949 val_iou=0.7330
+	train_abs_depth_error=0.01674 val_abs_depth_error=0.01671
+	train_tp_depth_error=0.01958 val_tp_depth_error=0.01862
+Epoch 580 / 800:
+	train_iou=0.8020 val_iou=0.7324
+	train_abs_depth_error=0.0167 val_abs_depth_error=0.01659
+	train_tp_depth_error=0.01884 val_tp_depth_error=0.01829
+Epoch 590 / 800:
+	train_iou=0.8038 val_iou=0.7335
+	train_abs_depth_error=0.01621 val_abs_depth_error=0.01633
+	train_tp_depth_error=0.01868 val_tp_depth_error=0.018
+Epoch 600 / 800:
+	train_iou=0.8079 val_iou=0.7354
+	train_abs_depth_error=0.01624 val_abs_depth_error=0.01625
+	train_tp_depth_error=0.01852 val_tp_depth_error=0.01775
+Epoch 610 / 800:
+	train_iou=0.8001 val_iou=0.7168
+	train_abs_depth_error=0.01641 val_abs_depth_error=0.01734
+	train_tp_depth_error=0.01856 val_tp_depth_error=0.01829
+Epoch 620 / 800:
+	train_iou=0.8109 val_iou=0.7346
+	train_abs_depth_error=0.01602 val_abs_depth_error=0.01611
+	train_tp_depth_error=0.01838 val_tp_depth_error=0.01764
+Epoch 630 / 800:
+	train_iou=0.8066 val_iou=0.7339
+	train_abs_depth_error=0.01594 val_abs_depth_error=0.01603
+	train_tp_depth_error=0.01855 val_tp_depth_error=0.01781
+Epoch 640 / 800:
+	train_iou=0.8127 val_iou=0.7348
+	train_abs_depth_error=0.01576 val_abs_depth_error=0.0159
+	train_tp_depth_error=0.0181 val_tp_depth_error=0.01751
+Epoch 650 / 800:
+	train_iou=0.8153 val_iou=0.7371
+	train_abs_depth_error=0.01579 val_abs_depth_error=0.01591
+	train_tp_depth_error=0.01798 val_tp_depth_error=0.01744
+Epoch 660 / 800:
+	train_iou=0.8166 val_iou=0.7390
+	train_abs_depth_error=0.0161 val_abs_depth_error=0.01587
+	train_tp_depth_error=0.01807 val_tp_depth_error=0.0173
+Epoch 670 / 800:
+	train_iou=0.8172 val_iou=0.7389
+	train_abs_depth_error=0.01555 val_abs_depth_error=0.01575
+	train_tp_depth_error=0.01788 val_tp_depth_error=0.01719
+Epoch 680 / 800:
+	train_iou=0.8159 val_iou=0.7260
+	train_abs_depth_error=0.0157 val_abs_depth_error=0.01574
+	train_tp_depth_error=0.01787 val_tp_depth_error=0.01745
+Epoch 690 / 800:
+	train_iou=0.6838 val_iou=0.6565
+	train_abs_depth_error=0.02147 val_abs_depth_error=0.02023
+	train_tp_depth_error=0.02349 val_tp_depth_error=0.02314
+Epoch 700 / 800:
+	train_iou=0.8004 val_iou=0.7370
+	train_abs_depth_error=0.01564 val_abs_depth_error=0.01586
+	train_tp_depth_error=0.01961 val_tp_depth_error=0.01804
+Epoch 710 / 800:
+	train_iou=0.8153 val_iou=0.7403
+	train_abs_depth_error=0.01546 val_abs_depth_error=0.01563
+	train_tp_depth_error=0.01788 val_tp_depth_error=0.0172
+Epoch 720 / 800:
+	train_iou=0.8159 val_iou=0.7363
+	train_abs_depth_error=0.01537 val_abs_depth_error=0.01558
+	train_tp_depth_error=0.01764 val_tp_depth_error=0.01721
+Epoch 730 / 800:
+	train_iou=0.8247 val_iou=0.7400
+	train_abs_depth_error=0.01529 val_abs_depth_error=0.01545
+	train_tp_depth_error=0.01739 val_tp_depth_error=0.01672
+Epoch 740 / 800:
+	train_iou=0.8250 val_iou=0.7426
+	train_abs_depth_error=0.01531 val_abs_depth_error=0.01537
+	train_tp_depth_error=0.0173 val_tp_depth_error=0.01659
+Epoch 750 / 800:
+	train_iou=0.8252 val_iou=0.7413
+	train_abs_depth_error=0.01516 val_abs_depth_error=0.01527
+	train_tp_depth_error=0.01724 val_tp_depth_error=0.01671
+Epoch 760 / 800:
+	train_iou=0.8292 val_iou=0.7375
+	train_abs_depth_error=0.01538 val_abs_depth_error=0.0154
+	train_tp_depth_error=0.01709 val_tp_depth_error=0.01657
+Epoch 770 / 800:
+	train_iou=0.8307 val_iou=0.7400
+	train_abs_depth_error=0.01499 val_abs_depth_error=0.01516
+	train_tp_depth_error=0.017 val_tp_depth_error=0.01641
+Epoch 780 / 800:
+	train_iou=0.8324 val_iou=0.7411
+	train_abs_depth_error=0.01493 val_abs_depth_error=0.01506
+	train_tp_depth_error=0.01689 val_tp_depth_error=0.01628
+Epoch 790 / 800:
+	train_iou=0.8292 val_iou=0.7435
+	train_abs_depth_error=0.01499 val_abs_depth_error=0.01526
+	train_tp_depth_error=0.01707 val_tp_depth_error=0.01637
+Epoch 800 / 800:
+	train_iou=0.8333 val_iou=0.7424
+	train_abs_depth_error=0.0149 val_abs_depth_error=0.01493
+	train_tp_depth_error=0.01684 val_tp_depth_error=0.0162
+saved model to detector/detector_0325_024825/detector.th
