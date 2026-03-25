@@ -61,7 +61,7 @@ def train_detection(
     val_metric = DetectionMetric()
 
     # define focal loss
-    mcf_loss = MultiClassFocalLoss()
+    mcf_loss = MultiClassFocalLoss(alpha=torch.tensor([.6, 5, 5]), gamma=3).to(device)
     
     print(f'started training loop')
     # training loop
