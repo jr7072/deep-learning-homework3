@@ -16,7 +16,8 @@ class ConvBlock(torch.nn.Module):
         out_channels: int,
         kernel_size: int,
         padding: int=0,
-        stride: int=1
+        stride: int=1,
+        groups: int=1
     ):
         
         super().__init__()
@@ -27,12 +28,13 @@ class ConvBlock(torch.nn.Module):
                 out_channels,
                 kernel_size=kernel_size,
                 padding=padding,
-                stride=stride
+                stride=stride,
+                groups=groups
             ),
             torch.nn.BatchNorm2d(
                 out_channels
             ),
-            torch.nn.ReLU()
+            torch.nn.ReLU6()
         ]
 
         self.block = torch.nn.Sequential(*layers)
@@ -73,6 +75,45 @@ class EncoderBlock(torch.nn.Module):
         return self.block(x)
 
 
+class InvResEncoderBlock(torch.nn.Module):
+
+    def __init__(
+        self,
+        in_channels: int,
+        out_channels: int,
+        block_reps: int
+    ):
+        
+        super().__init__()
+
+        layers = list()
+
+        current_input = in_channels
+        for i in range(block_reps):
+
+            stride = 1
+
+            if i == 0:
+                stride = 2
+            
+            layers.append(
+                InvertedResBlock(
+                    current_input,
+                    out_channels,
+                    exp_factor=4,
+                    stride=stride
+                )
+            )
+
+            current_input = out_channels
+        
+        self.block = torch.nn.Sequential(*layers)
+    
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+
+        return self.block(x)
+
+
 class UpsampleBlock(torch.nn.Module):
 
     def __init__(
@@ -93,7 +134,7 @@ class UpsampleBlock(torch.nn.Module):
                 stride=2
             ),
             torch.nn.BatchNorm2d(out_channels),
-            torch.nn.ReLU()
+            torch.nn.ReLU6()
         ]
 
         self.block = torch.nn.Sequential(*layers)
@@ -329,9 +370,10 @@ class Detector(torch.nn.Module):
         for _ in range(3):
 
             self.encoder_layers.append(
-                EncoderBlock(
+                InvResEncoderBlock(
                     current_output_size,
-                    current_output_size * 2
+                    current_output_size * 2,
+                    block_reps=2
                 )
             )
 
