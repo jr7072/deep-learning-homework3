@@ -10,7 +10,7 @@ from .loss import MultiClassFocalLoss
 
 class IOUEarlyStopper:
 
-    def __init__(self, patience: int=10, max_delta: int=0):
+    def __init__(self, patience: int=20, max_delta: int=0):
 
         super().__init__()
 
