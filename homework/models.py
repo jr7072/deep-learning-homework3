@@ -48,7 +48,8 @@ class EncoderBlock(torch.nn.Module):
     def __init__(
         self,
         in_channels: int,
-        out_channels: int,   
+        out_channels: int,
+        include_dropout: bool=False
     ):
         
         super().__init__()
@@ -68,6 +69,9 @@ class EncoderBlock(torch.nn.Module):
                 stride=2
             )
         ]
+
+        if include_dropout:
+            layers.append(torch.nn.Dropout(p=.2))
 
         self.block = torch.nn.Sequential(*layers)
     
@@ -119,7 +123,8 @@ class UpsampleBlock(torch.nn.Module):
     def __init__(
         self,
         in_channels: int,
-        out_channels: int
+        out_channels: int,
+        include_dropout: bool=False
     ):
         
         super().__init__()
@@ -136,6 +141,11 @@ class UpsampleBlock(torch.nn.Module):
             torch.nn.BatchNorm2d(out_channels),
             torch.nn.ReLU6()
         ]
+
+        if include_dropout:
+            layers.append(
+                torch.nn.Dropout(p=.2)
+            )
 
         self.block = torch.nn.Sequential(*layers)
     
@@ -367,13 +377,20 @@ class Detector(torch.nn.Module):
         # encoding layers
         self.encoder_layers = torch.nn.ModuleList()
         current_output_size = 32
-        for _ in range(3):
+        encoding_layers = 2
+
+        for layer in range(encoding_layers):
+
+            include_dropout = False
+
+            if layer == (encoding_layers - 1):
+                include_dropout = True
 
             self.encoder_layers.append(
-                InvResEncoderBlock(
+                EncoderBlock(
                     current_output_size,
                     current_output_size * 2,
-                    block_reps=2
+                    include_dropout
                 )
             )
 
@@ -388,6 +405,7 @@ class Detector(torch.nn.Module):
                 kernel_size=3,
                 padding=1
             ),
+            torch.nn.Dropout(p=.5),
             ConvBlock(
                 current_output_size * 2,
                 current_output_size,
@@ -400,7 +418,12 @@ class Detector(torch.nn.Module):
         
         # define decode layers
         self.decode_layers = torch.nn.ModuleList()
-        for _ in self.encoder_layers:
+        for i, _ in enumerate(self.encoder_layers):
+
+            include_dropout = False
+
+            if i == (encoding_layers - 1):
+                include_dropout = True
 
             first_decode_layer = ConvBlock(
                 current_output_size,
@@ -411,7 +434,8 @@ class Detector(torch.nn.Module):
 
             upsample_layer = UpsampleBlock(
                 current_output_size * 2,
-                current_output_size // 2
+                current_output_size // 2,
+                include_dropout
             )
 
             decode_package = torch.nn.ModuleList([first_decode_layer, upsample_layer])
@@ -425,6 +449,7 @@ class Detector(torch.nn.Module):
             num_classes,
             kernel_size=1
         )
+    
 
         self.depth_head = ConvBlock(
             current_output_size,
@@ -446,10 +471,10 @@ class Detector(torch.nn.Module):
                 - depth (b, h, w)
         """
         # optional: normalizes the input
-        # z = (x - self.input_mean[None, :, None, None]) / self.input_std[None, :, None, None]
+        z = (x - self.input_mean[None, :, None, None]) / self.input_std[None, :, None, None]
 
         # first full convolution
-        current_map = self.first_layer(x)
+        current_map = self.first_layer(z)
         
         # encoder layers
         encoder_feature_maps = list()
