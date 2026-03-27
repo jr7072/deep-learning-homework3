@@ -91,7 +91,7 @@ def train_detection(
     mcf_loss = MultiClassFocalLoss(alpha=torch.tensor([.6, 5, 5]), gamma=3).to(device)
 
     # start the early stopper for iou metric
-    early_stopper = IOUEarlyStopper(patience=10)
+    early_stopper = IOUEarlyStopper(patience=20)
     
     print(f'started training loop')
     # training loop
