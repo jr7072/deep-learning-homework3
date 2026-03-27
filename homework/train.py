@@ -16,6 +16,7 @@ if __name__ == '__main__':
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--seed", type=int, default=2024)
     parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--patience", type=int, default=20)
 
     args = parser.parse_args()
     
