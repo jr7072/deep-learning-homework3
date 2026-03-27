@@ -384,7 +384,7 @@ class Detector(torch.nn.Module):
             include_dropout = False
 
             if layer == (encoding_layers - 1):
-                include_dropout = False
+                include_dropout = True
 
             self.encoder_layers.append(
                 EncoderBlock(
@@ -423,7 +423,7 @@ class Detector(torch.nn.Module):
             include_dropout = False
 
             if i == (encoding_layers - 1):
-                include_dropout = False
+                include_dropout = True
 
             first_decode_layer = ConvBlock(
                 current_output_size,
