@@ -8,6 +8,33 @@ from .datasets.road_dataset import load_data as load_drive_data
 from .metrics import AccuracyMetric, DetectionMetric
 from .loss import MultiClassFocalLoss
 
+class IOUEarlyStopper:
+
+    def __init__(self, patience: int=10, max_delta: int=0):
+
+        super().__init__()
+
+        self.patience = patience
+        self.max_delta = max_delta
+        self.counter = 0
+        self.best_metric = torch.tensor(0)
+    
+    def check(self, validation_iou: torch.Tensor) -> bool:
+
+        if validation_iou > (self.best_metric - self.max_delta):
+            
+            self.best_metric = validation_iou
+            self.counter = 0
+
+            return False
+        
+        self.counter += 1
+        
+        if self.counter > self.patience:
+            return True
+        
+        return False
+
 def get_device() -> torch.DeviceObjType:
     '''
         loads the device to use for training
@@ -62,6 +89,9 @@ def train_detection(
 
     # define focal loss
     mcf_loss = MultiClassFocalLoss(alpha=torch.tensor([.6, 5, 5]), gamma=3).to(device)
+
+    # start the early stopper for iou metric
+    early_stopper = IOUEarlyStopper(patience=10)
     
     print(f'started training loop')
     # training loop
@@ -207,7 +237,9 @@ def train_detection(
             global_step=global_step
         )
 
-        if epoch == 0 or epoch == num_epoch - 1 or (epoch + 1) % 10 == 0:
+        stop_early = early_stopper.check(val_iou)
+
+        if epoch == 0 or epoch == num_epoch - 1 or (epoch + 1) % 10 == 0 or stop_early:
 
             print(
                 f"Epoch {epoch + 1:2d} / {num_epoch:2d}:\n"
@@ -218,6 +250,9 @@ def train_detection(
                 f"\ttrain_tp_depth_error={train_tp_depth_err:.4} "
                 f"val_tp_depth_error={val_tp_depth_err:.4}"
             )
+        
+        if stop_early:
+            break
 
     # save trained model here
     save_model(model)
