@@ -125,13 +125,33 @@ def train_detection(
             depth_labels = data['depth'].to(device)
             track_labels = data['track'].to(device)
 
-            track_preds, depth_preds = model.predict(images)
+            track_logits, depth_pred = model(images)
+            
+            # capture the accuracy here
+            track_pred = track_logits.argmax(dim=1)
+
+            # backpropogate with a combined loss
+            track_loss = mcf_loss(
+                track_logits,
+                track_labels
+            )
+
+            depth_loss = torch.nn.functional.mse_loss(
+                depth_pred,
+                depth_labels
+            )
+
+            # combine the losses
+            loss = track_loss + depth_loss
+
+            # capture validation loss
+            logger.add_scalar('val/loss', loss, global_step=global_step)
             
             # capture the accuracy here
             val_metric.add(
-                track_preds,
+                track_pred,
                 track_labels,
-                depth_preds,
+                depth_pred,
                 depth_labels
             )
 
