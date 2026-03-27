@@ -377,7 +377,7 @@ class Detector(torch.nn.Module):
         # encoding layers
         self.encoder_layers = torch.nn.ModuleList()
         current_output_size = 32
-        encoding_layers = 2
+        encoding_layers = 3
 
         for layer in range(encoding_layers):
 
