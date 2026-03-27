@@ -85,7 +85,8 @@ class InvResEncoderBlock(torch.nn.Module):
         self,
         in_channels: int,
         out_channels: int,
-        block_reps: int
+        block_reps: int,
+        include_dropout: bool=False
     ):
         
         super().__init__()
@@ -387,10 +388,11 @@ class Detector(torch.nn.Module):
                 include_dropout = True
 
             self.encoder_layers.append(
-                EncoderBlock(
+                InvResEncoderBlock(
                     current_output_size,
                     current_output_size * 2,
-                    include_dropout
+                    block_reps=2,
+                    include_dropout=include_dropout
                 )
             )
 
