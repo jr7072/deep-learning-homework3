@@ -388,10 +388,9 @@ class Detector(torch.nn.Module):
                 include_dropout = True
 
             self.encoder_layers.append(
-                InvResEncoderBlock(
+                EncoderBlock(
                     current_output_size,
                     current_output_size * 2,
-                    block_reps=2,
                     include_dropout=include_dropout
                 )
             )
