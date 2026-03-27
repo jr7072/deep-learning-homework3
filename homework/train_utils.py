@@ -181,6 +181,12 @@ def train_detection(
             global_step=global_step
         )
 
+        logger.add_scalar(
+            'meta/epoch',
+            epoch,
+            global_step=global_step
+        )
+
         if epoch == 0 or epoch == num_epoch - 1 or (epoch + 1) % 10 == 0:
 
             print(
