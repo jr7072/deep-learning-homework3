@@ -81,7 +81,7 @@ def train_detection(
     train_data = load_drive_data('drive_data/train', shuffle=True, batch_size=batch_size)
     val_data = load_drive_data('drive_data/val', batch_size=batch_size)
 
-    optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=4e-5)
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=4e-5)
     
     # create metric obj here
     train_metric = DetectionMetric()

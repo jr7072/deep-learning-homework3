@@ -59,6 +59,7 @@ class EncoderBlock(torch.nn.Module):
                 in_channels,
                 out_channels,
                 kernel_size=3,
+                stride=2,
                 padding=1
             ),
             ConvBlock(
@@ -66,7 +67,6 @@ class EncoderBlock(torch.nn.Module):
                 out_channels,
                 kernel_size=3,
                 padding=1,
-                stride=2
             )
         ]
 
