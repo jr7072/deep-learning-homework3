@@ -1,4 +1,3 @@
-grader/
 bundle.py
 classification_data/
 drive_data/
@@ -7,3 +6,4 @@ homework/datasets/__pycache__
 classification_data.zip
 drive_data.zip
 test.ipynb
+grader/__pycache__
